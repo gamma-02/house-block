@@ -1,6 +1,9 @@
 package net.fabricmc.example;
 
 import net.minecraft.block.*;
+import net.minecraft.block.entity.BlockEntity;
+import net.minecraft.block.entity.BlockEntityTicker;
+import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.block.enums.BlockHalf;
 import net.minecraft.block.enums.DoubleBlockHalf;
 import net.minecraft.block.enums.SlabType;
@@ -27,11 +30,11 @@ import static net.minecraft.block.HorizontalConnectingBlock.*;
 import static net.minecraft.block.LeavesBlock.PERSISTENT;
 import static net.minecraft.block.StairsBlock.*;
 
-public class HouseBlock extends Block {
+public class HouseBlock extends BlockWithEntity {
     public HouseBlock(Settings settings) {
         super(settings);
     }
-    ConcurrentHashMap<BlockPos, BlockState> map = new ConcurrentHashMap<>();
+    static HashMap<BlockPos, BlockState> map = new HashMap<>();
 
 
 
@@ -70,9 +73,9 @@ public class HouseBlock extends Block {
     public static BlockState loslab = Blocks.OAK_SLAB.getDefaultState().with(SlabBlock.TYPE, SlabType.BOTTOM);
     @NotNull
     public static BlockState uoslab = Blocks.OAK_SLAB.getDefaultState().with(SlabBlock.TYPE, SlabType.TOP);
-    @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        map = new ConcurrentHashMap<>();
+
+    static {
+        map = new HashMap<>();
         map.put(new BlockPos(0, 0, 3), Blocks.SPRUCE_FENCE.getDefaultState());
         map.put(new BlockPos(0, 1, 3), Blocks.SPRUCE_FENCE.getDefaultState());
         map.put(new BlockPos(0, 2, 3), Blocks.SPRUCE_FENCE.getDefaultState());
@@ -545,6 +548,10 @@ public class HouseBlock extends Block {
         map.put(new BlockPos(5, 8, 6), nostairs);
         map.put(new BlockPos(9, 8, 3), Blocks.POLISHED_ANDESITE.getDefaultState());
         map.put(new BlockPos(9, 9, 3), Blocks.POLISHED_ANDESITE.getDefaultState());
+    }
+    @Override
+    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
+        /*
         pos = pos.add(3, 0, 3);
        //Set<BlockPos> keySet = map.keySet();
         for (Iterator<BlockPos> iterator = map.keySet().iterator(); iterator.hasNext(); ) {
@@ -573,6 +580,20 @@ public class HouseBlock extends Block {
 
 
         }
-        map.clear();
+
+         */
+
+    }
+
+    @Nullable
+    @Override
+    public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
+        return new HouseBlockEntity(pos, state);
+    }
+
+    @Nullable
+    @Override
+    public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
+        return HouseBlockEntity::tick;
     }
 }
