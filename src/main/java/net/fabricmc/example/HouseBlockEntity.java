@@ -34,6 +34,8 @@ public class HouseBlockEntity extends BlockEntity {
                     BlockPos pos = (BlockPos) positions[random.nextInt(positions.length - 1)];
                     world.setBlockState(pos.add(blockPos), map.get(pos));
                     world.playSound(null, pos.add(blockPos), map.get(pos).getBlock().getSoundGroup(map.get(pos)).getPlaceSound(), SoundCategory.BLOCKS, 1f, 1f);
+                    world.setBlockState(new BlockPos(1, 4, 2).add(blockPos), map.get(new BlockPos(1, 4, 2)));
+                    world.updateNeighbors(pos.add(blockPos), map.get(pos).getBlock());
                     map.remove(pos);
                 }
             }

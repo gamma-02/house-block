@@ -36,7 +36,10 @@ public class HouseBlock extends BlockWithEntity {
     }
     static HashMap<BlockPos, BlockState> map = new HashMap<>();
 
-
+    @Override
+    public BlockRenderType getRenderType(BlockState blockState) {
+        return BlockRenderType.MODEL;
+    }
 
 
 
@@ -127,11 +130,13 @@ public class HouseBlock extends BlockWithEntity {
         map.put(new BlockPos(6, 2, 0), glass_east);
 
         map.put(new BlockPos(7, 2, 0), Blocks.OAK_WOOD.getDefaultState());
+        map.put(new BlockPos(7, 2, -1), Blocks.WALL_TORCH.getDefaultState().with(FACING, Direction.NORTH));
         map.put(new BlockPos(8, 2, 0), glass_east);
         map.put(new BlockPos(9, 2, 0), glass_east);
         map.put(new BlockPos(10, 2, 0), glass_east);
 
         map.put(new BlockPos(11, 2, 0), Blocks.OAK_WOOD.getDefaultState());
+        map.put(new BlockPos(11, 2, -1), Blocks.WALL_TORCH.getDefaultState().with(FACING, Direction.NORTH));
         map.put(new BlockPos(12, 2, 0), glass_east);
         map.put(new BlockPos(13, 2, 0), glass_east);
         map.put(new BlockPos(14, 2, 0), glass_east);
@@ -205,17 +210,14 @@ public class HouseBlock extends BlockWithEntity {
         map.put(new BlockPos(13, 2, 10), glass_east);
         map.put(new BlockPos(12, 2, 10), glass_east);
 
-        map.put(new BlockPos(15, 2, 10), wood);
-        map.put(new BlockPos(14, 2, 10), glass_east);
-        map.put(new BlockPos(13, 2, 10), glass_east);
-        map.put(new BlockPos(12, 2, 10), glass_east);
-
         map.put(new BlockPos(7, 2, 10), wood);
+        map.put(new BlockPos(7, 2, 11), Blocks.WALL_TORCH.getDefaultState().with(FACING, Direction.SOUTH));
         map.put(new BlockPos(4, 2, 10), glass_east);
         map.put(new BlockPos(5, 2, 10), glass_east);
         map.put(new BlockPos(6, 2, 10), glass_east);
 
         map.put(new BlockPos(11, 2, 10), wood);
+        map.put(new BlockPos(11, 2, 11), Blocks.WALL_TORCH.getDefaultState().with(FACING, Direction.SOUTH));
         map.put(new BlockPos(10, 2, 10), glass_east);
         map.put(new BlockPos(9, 2,10), glass_east);
         map.put(new BlockPos(8, 2, 10), glass_east);
@@ -292,6 +294,8 @@ public class HouseBlock extends BlockWithEntity {
         map.put(new BlockPos(3, 1, 6), Blocks.OAK_WOOD.getDefaultState());
         map.put(new BlockPos(3, 1, 5), Blocks.DARK_OAK_DOOR.getDefaultState().with(DoorBlock.HALF, DoubleBlockHalf.LOWER));
         map.put(new BlockPos(3, 2, 5), Blocks.DARK_OAK_DOOR.getDefaultState().with(DoorBlock.HALF, DoubleBlockHalf.UPPER));
+        map.put(new BlockPos(2, 2, 6), Blocks.WALL_TORCH.getDefaultState().with(WallTorchBlock.FACING, Direction.WEST));
+        map.put(new BlockPos(2, 2, 4), Blocks.WALL_TORCH.getDefaultState().with(WallTorchBlock.FACING, Direction.WEST));
         map.put(new BlockPos(3, 3, 5), wood);
         map.put(new BlockPos(3, 4, 5), wood);
 
@@ -363,10 +367,12 @@ public class HouseBlock extends BlockWithEntity {
         map.put(new BlockPos(15, 2, 1), glass_south);
         map.put(new BlockPos(15, 2, 2), glass_south);
         map.put(new BlockPos(15, 2, 3), wood);
+        map.put(new BlockPos(16, 2, 3), Blocks.WALL_TORCH.getDefaultState().with(FACING, Direction.EAST));
         map.put(new BlockPos(15, 2, 4), glass_south);
         map.put(new BlockPos(15, 2, 5), glass_south);
         map.put(new BlockPos(15, 2, 6), glass_south);
         map.put(new BlockPos(15, 2, 7), wood);
+        map.put(new BlockPos(16, 2, 7), Blocks.WALL_TORCH.getDefaultState().with(FACING, Direction.EAST));
         map.put(new BlockPos(15, 2, 8), glass_south);
         map.put(new BlockPos(15, 2, 9), glass_south);
         map.put(new BlockPos(15, 2, 10), wood);
@@ -439,6 +445,7 @@ public class HouseBlock extends BlockWithEntity {
         map.put(new BlockPos(0, 4, 4), lsslab);
         map.put(new BlockPos(0, 4, 3), lsslab);
         map.put(new BlockPos(0, 4, 2), lsslab);
+        map.put(new BlockPos(1, 4, 2), lsslab);
         map.put(new BlockPos(1, 4, 2), lsslab);
         map.put(new BlockPos(1, 4, 1), lsslab);
         for(int z3 = 14; z3>3; z3--){
@@ -548,6 +555,7 @@ public class HouseBlock extends BlockWithEntity {
         map.put(new BlockPos(5, 8, 6), nostairs);
         map.put(new BlockPos(9, 8, 3), Blocks.POLISHED_ANDESITE.getDefaultState());
         map.put(new BlockPos(9, 9, 3), Blocks.POLISHED_ANDESITE.getDefaultState());
+
     }
     @Override
     public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
