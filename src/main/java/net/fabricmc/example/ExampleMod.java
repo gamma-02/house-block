@@ -14,12 +14,13 @@ import net.minecraft.block.entity.BlockEntityType;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.ItemGroup;
+import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.registry.Registry;
 
 public class ExampleMod implements ModInitializer, ClientModInitializer {
 	public static String MOD_ID = new String("house_block");
-	public static final Block HouseBlock2 = new HouseBlock(FabricBlockSettings.of(Material.AMETHYST).strength(1.0F).nonOpaque());
+	public static final Block HouseBlock2 = new HouseBlock(FabricBlockSettings.of(Material.PLANT).noCollision().ticksRandomly().breakInstantly().sounds(BlockSoundGroup.CROP).nonOpaque());
 	public static BlockEntityType<HouseBlockEntity> houseBlockEntityBlockEntityType;
 	@Override
 	public void onInitialize() {

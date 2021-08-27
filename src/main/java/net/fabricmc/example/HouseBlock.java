@@ -12,6 +12,7 @@ import net.minecraft.entity.LivingEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import net.minecraft.server.world.ServerWorld;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
@@ -23,6 +24,7 @@ import org.lwjgl.system.CallbackI;
 
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -30,7 +32,7 @@ import static net.minecraft.block.HorizontalConnectingBlock.*;
 import static net.minecraft.block.LeavesBlock.PERSISTENT;
 import static net.minecraft.block.StairsBlock.*;
 
-public class HouseBlock extends BlockWithEntity {
+public class HouseBlock extends CropBlock implements BlockEntityProvider {
     public HouseBlock(Settings settings) {
         super(settings);
     }
@@ -557,42 +559,15 @@ public class HouseBlock extends BlockWithEntity {
         map.put(new BlockPos(9, 9, 3), Blocks.POLISHED_ANDESITE.getDefaultState());
 
     }
+
     @Override
-    public void onPlaced(World world, BlockPos pos, BlockState state, @Nullable LivingEntity placer, ItemStack itemStack) {
-        /*
-        pos = pos.add(3, 0, 3);
-       //Set<BlockPos> keySet = map.keySet();
-        for (Iterator<BlockPos> iterator = map.keySet().iterator(); iterator.hasNext(); ) {
-            BlockPos pos1 = iterator.next();
-            @NotNull
-            BlockState state2 = map.get(pos1);
-            BlockPos pos2 = pos1;
-
-            if (state2 != null) {
-                world.setBlockState(pos2.add(pos), state2);
-
-            }
-
-
-        }
-        for (Iterator<BlockPos> iterator = map.keySet().iterator(); iterator.hasNext(); ) {
-            BlockPos pos1 = iterator.next();
-            @NotNull
-            BlockState state2 = map.get(pos1);
-            BlockPos pos2 = pos1;
-
-            if (state2 != null) {
-                world.updateNeighbors(pos2.add(pos), state2.getBlock());
-
-            }
-
-
-        }
-
-         */
-
+    public void applyGrowth(World world, BlockPos pos, BlockState state) {
+        ((HouseBlockEntity)world.getBlockEntity(pos)).doGrowth = true;
     }
-
+    @Override
+    public void randomTick(BlockState state, ServerWorld world, BlockPos pos, Random random) {
+        ((HouseBlockEntity)world.getBlockEntity(pos)).doGrowth = true;
+    }
     @Nullable
     @Override
     public BlockEntity createBlockEntity(BlockPos pos, BlockState state) {
@@ -604,4 +579,6 @@ public class HouseBlock extends BlockWithEntity {
     public <T extends BlockEntity> BlockEntityTicker<T> getTicker(World world, BlockState state, BlockEntityType<T> type) {
         return HouseBlockEntity::tick;
     }
+
+
 }
